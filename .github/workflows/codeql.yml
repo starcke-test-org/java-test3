@@ -1,0 +1,55 @@
+name: "CodeQL"
+run-name: ${{ github.event.inputs.code_scanning_run_name }}
+on: 
+    workflow_dispatch:
+      inputs:
+        code_scanning_run_name:
+          default: 'CodeQL Setup'
+        code_scanning_ref:
+          default: 'refs/heads/main'
+        code_scanning_is_analyzing_default_branch:
+          default: 'true'
+        code_scanning_workflow_file:
+          default: '.github/workflows/codeql.yml'
+        code_scanning_codeql_packs:
+          default: ''
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    continue-on-error: false
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ java-kotlin ]
+    env:
+      CODE_SCANNING_REF: ${{ github.event.inputs.code_scanning_ref }}
+      CODE_SCANNING_IS_ANALYZING_DEFAULT_BRANCH: ${{ github.event.inputs.code_scanning_is_analyzing_default_branch }}
+      CODE_SCANNING_WORKFLOW_FILE: ${{ github.event.inputs.code_scanning_workflow_file }}
+      CODEQL_EXTRACTOR_JAVA_OPTION_BUILDLESS: true
+      CODEQL_EXTRACTOR_JAVA_OPTION_BUILDLESS_CLASSPATH_FROM_BUILD_FILES: true
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: ${{ matrix.language }}
+        queries: "" # Default query suite
+        packs: ${{ github.event.inputs.code_scanning_codeql_packs }}
+        config: |
+          threat-models: [  ]
+
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v3
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:${{matrix.language}}"
