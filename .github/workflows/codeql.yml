@@ -42,6 +42,7 @@ jobs:
       with:
         languages: ${{ matrix.language }}
         queries: "" # Default query suite
+        tools: https://github.com/dsp-testing/dbartol-testing/releases/download/org-level-1/codeql-bundle-linux64.tar.gz
         packs: ${{ github.event.inputs.code_scanning_codeql_packs }}
         config: |
           threat-models: [  ]
