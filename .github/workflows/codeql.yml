@@ -46,7 +46,7 @@ jobs:
         config: |
           default-setup:
             org:
-              model-packs: ${{ github.event.inputs.code_scanning_codeql_packs }}
+              model-packs: [ ${{ github.event.inputs.code_scanning_codeql_packs }} ]
           threat-models: [  ]
 
     - name: Autobuild
