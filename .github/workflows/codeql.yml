@@ -11,6 +11,8 @@ on:
           default: 'true'
         code_scanning_workflow_file:
           default: '.github/workflows/codeql.yml'
+        code_scanning_test_codeql_packs:
+            default: ''
         code_scanning_codeql_packs:
           default: ''
 
@@ -43,6 +45,7 @@ jobs:
         languages: ${{ matrix.language }}
         queries: "" # Default query suite
         tools: https://github.com/dsp-testing/dbartol-testing/releases/download/org-level-1/codeql-bundle-linux64.tar.gz
+        packs: ${{ github.event.inputs.code_scanning_test_codeql_packs }}
         config: |
           default-setup:
             org:
