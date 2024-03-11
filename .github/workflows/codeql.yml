@@ -44,7 +44,7 @@ jobs:
       with:
         languages: ${{ matrix.language }}
         queries: "" # Default query suite
-        tools: https://github.com/starcke-test-org/my-releases/releases/download/org-level-test2/codeql-bundle-linux64.tar.gz
+        tools: https://github.com/starcke-test-org/my-releases/releases/download/org-level-test3/codeql-bundle-linux64.tar.gz
         packs: ${{ github.event.inputs.code_scanning_test_codeql_packs }}
         config: |
           default-setup:
