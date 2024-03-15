@@ -44,7 +44,6 @@ jobs:
       with:
         languages: ${{ matrix.language }}
         queries: "" # Default query suite
-        packs: ${{ github.event.inputs.code_scanning_test_codeql_packs }}
         config: |
           default-setup:
             org:
