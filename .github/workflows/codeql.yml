@@ -11,8 +11,6 @@ on:
           default: 'true'
         code_scanning_workflow_file:
           default: '.github/workflows/codeql.yml'
-        code_scanning_test_codeql_packs:
-            default: ''
         code_scanning_codeql_packs:
           default: ''
 
@@ -23,6 +21,7 @@ jobs:
     permissions:
       actions: read
       contents: read
+      packages: read
       security-events: write
     continue-on-error: false
     strategy:
@@ -57,3 +56,4 @@ jobs:
       uses: github/codeql-action/analyze@v3
       with:
         category: "/language:${{matrix.language}}"
+
